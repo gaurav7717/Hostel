@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timed QR Code Generator with SOS</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      width: 320px;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #007bff;
+      font-size: 24px;
+    }
+
+    #message {
+      color: #555;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+
+    #qrcode {
+      margin: 20px auto;
+      text-align: center; /* Center the QR code within the div */
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    #sosButton {
+      background-color: #ff5757;
+    }
+
+    #qrcode canvas {
+      border: 4px solid #007bff; /* Add a thicker border to the QR code */
+      border-radius: 10px; /* Add rounded corners */
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Attendance QR Code Generator</h1>
+    <p id="message">Generate an Attendance QR code:</p>
+    <button id="generateButton" onclick="generateQRCode()">Generate QR Code</button>
+    <button id="sosButton" onclick="sendAttendanceMessage()">SOS</button>
+    <div id="qrcode"></div>
+  </div>
+
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script>
+    let doubleClick = false;
+
+    function generateQRCode() {
+      if (doubleClick || isScheduledTime()) {
+        doubleClick = false;
+        var randomData = getRandomData();
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+          text: randomData,
+          width: 200,
+          height: 200,
+        });
+        document.getElementById("message").textContent = "Attendance QR code generated!";
+      } else {
+        doubleClick = true;
+      }
+    }
+
+    function isScheduledTime() {
+      var currentTime = new Date();
+      return currentTime.getHours() === 3 && currentTime.getMinutes() === 0; // 3 AM
+    }
+
+    function getRandomData() {
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var randomData = '';
+      var length = 10;
+      for (var i = 0; i < length; i++) {
+        var randomIndex = Math.floor(Math.random() * characters.length);
+        randomData += characters.charAt(randomIndex);
+      }
+      return randomData;
+    }
+
+    function sendAttendanceMessage() {
+      alert("Attendance message sent!"); // You can replace this with your actual Attendance message sending logic
+    }
+  </script>
+</body>
+</html>

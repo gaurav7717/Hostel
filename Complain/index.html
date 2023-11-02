@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hostel Complaint Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    form {
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .form-group {
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Hostel Complaint Form</h2>
+    <form id="complaintForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="room">Room Number:</label>
+        <input type="text" id="room" name="room" required>
+      </div>
+      <div class="form-group">
+        <label for="complaintType">Type of Complaint:</label>
+        <select id="complaintType" name="complaintType">
+          <option value="maintenance">Maintenance</option>
+          <option value="security">Security</option>
+          <option value="noise">Noise</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+      </div>
+      <form id="complaintForm" action="/send-email" method="post">
+  <!-- Other form fields as before -->
+  <button type="submit">Submit</button>
+</form>
+
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('complaintForm').addEventListener('submit', function (e) {
+      var room = document.getElementById('room').value;
+      var roomError = document.getElementById('roomError');
+
+      if (!isValidRoomNumber(room)) {
+        roomError.textContent = 'Invalid room number';
+        e.preventDefault();
+      } else {
+        roomError.textContent = '';
+      }
+    });
+
+    function isValidRoomNumber(room) {
+      var roomRegex = /^[A-Z]\d{3}$/; // Assuming room numbers are one uppercase letter followed by three digits
+      return roomRegex.test(room);
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
